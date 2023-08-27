@@ -92,9 +92,9 @@ const reducer = (state: State, action: Action): State => {
   if (action.type === 'SAVE') {
     const { title } = action.payload
     const newTodo = {
+      completed: false,
       id: crypto.randomUUID(),
-      title,
-      completed: false
+      title
     }
 
     return {
