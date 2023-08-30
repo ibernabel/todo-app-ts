@@ -17,11 +17,13 @@ const initialState = {
       .includes(filter)
       ? filter
       : TODO_FILTERS.ALL
-  })()
+  })(),
+  isLoading: true
 }
 
 type Action =
-  | { type: 'INIT_TODOS', payload: { todos: TodoList } }
+  // | { type: 'END_LOADING', payload: { isLoading: boolean } }
+  | { type: 'INIT_TODOS', payload: { todos: TodoList, isLoading: boolean } }
   | { type: 'CLEAR_COMPLETED' }
   | { type: 'COMPLETED', payload: { id: string, completed: boolean } }
   | { type: 'FILTER_CHANGE', payload: { filter: FilterValue } }
@@ -33,15 +35,17 @@ interface State {
   sync: boolean
   todos: TodoList
   filterSelected: FilterValue
+  isLoading: boolean
 }
 
 const reducer = (state: State, action: Action): State => {
   if (action.type === 'INIT_TODOS') {
-    const { todos } = action.payload
+    const { todos, isLoading } = action.payload
     return {
       ...state,
       sync: false,
-      todos
+      todos,
+      isLoading
     }
   }
 
@@ -130,6 +134,7 @@ export const useTodos = (): {
   completedCount: number
   todos: TodoList
   filterSelected: FilterValue
+  isLoading: boolean
   handleClearCompleted: () => void
   handleCompleted: (id: string, completed: boolean) => void
   handleFilterChange: (filter: FilterValue) => void
@@ -137,7 +142,7 @@ export const useTodos = (): {
   handleSave: (title: string) => void
   handleUpdateTitle: (params: { id: string, title: string }) => void
 } => {
-  const [{ sync, todos, filterSelected }, dispatch] = useReducer(reducer, initialState)
+  const [{ sync, todos, filterSelected, isLoading }, dispatch] = useReducer(reducer, initialState)
 
   const handleCompleted = (id: string, completed: boolean): void => {
     dispatch({ type: 'COMPLETED', payload: { id, completed } })
@@ -185,7 +190,7 @@ export const useTodos = (): {
   useEffect(() => {
     fetchTodos()
       .then(todos => {
-        dispatch({ type: 'INIT_TODOS', payload: { todos } })
+        dispatch({ type: 'INIT_TODOS', payload: { todos, isLoading: false } })
       })
       .catch(err => { console.error(err) })
   }, [])
@@ -200,6 +205,7 @@ export const useTodos = (): {
     activeCount,
     completedCount,
     filterSelected,
+    isLoading,
     handleClearCompleted,
     handleCompleted,
     handleFilterChange,

@@ -1,4 +1,5 @@
 // import { Copyright } from './components/Copyright'
+import { TodosLoading } from './components/TodosLoading'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { Todos } from './components/Todos'
@@ -9,6 +10,7 @@ const App: React.FC = () => {
     activeCount,
     completedCount,
     filterSelected,
+    // isLoading,
     handleClearCompleted,
     handleCompleted,
     handleFilterChange,
@@ -22,6 +24,11 @@ const App: React.FC = () => {
     <>
       <div className='todoapp'>
         <Header saveTodo={handleSave} />
+        {true && (
+        // <>
+            <TodosLoading />
+        // </>
+        )}
         <Todos
           removeTodo={handleRemove}
           setCompleted={handleCompleted}
