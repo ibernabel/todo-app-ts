@@ -1,8 +1,8 @@
-@charset "utf-8";
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@charset "utf-8";
 
 :root {
   --border-radius: 10px;
