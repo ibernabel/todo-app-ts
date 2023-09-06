@@ -188,11 +188,13 @@ export const useTodos = (): {
   const activeCount = todos.length - completedCount
 
   useEffect(() => {
-    fetchTodos()
-      .then(todos => {
-        dispatch({ type: 'INIT_TODOS', payload: { todos, isLoading: false } })
-      })
-      .catch(err => { console.error(err) })
+    setTimeout(() => {
+      fetchTodos()
+        .then(todos => {
+          dispatch({ type: 'INIT_TODOS', payload: { todos, isLoading: false } })
+        })
+        .catch(err => { console.error(err) })
+    }, 1000)
   }, [])
 
   useEffect(() => {

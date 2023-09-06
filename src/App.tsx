@@ -10,7 +10,7 @@ const App: React.FC = () => {
     activeCount,
     completedCount,
     filterSelected,
-    // isLoading,
+    isLoading,
     handleClearCompleted,
     handleCompleted,
     handleFilterChange,
@@ -24,10 +24,10 @@ const App: React.FC = () => {
     <>
       <div className='todoapp'>
         <Header saveTodo={handleSave} />
-        {true && (
-        // <>
+        {isLoading && (
+         <>
             <TodosLoading />
-        // </>
+         </>
         )}
         <Todos
           removeTodo={handleRemove}
